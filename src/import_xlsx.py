@@ -45,47 +45,53 @@ def create_medical_report_df(df_dict):
     # 診療報告書用のtableを作成
     
     # カルテtableをベースのtableとしてコピー
-    medical_report_df = df_dict[db_cols.medical_record].copy()
 
-    # 馬名カラムはエクセル上の関数でDB参照により入力されているので削除
-    medical_report_df = medical_report_df.drop(db_cols.horse_name, axis=1)
+    medical_report_df:pd.DataFrame = df_dict[db_cols.medical_record]
+    # 先頭行から順に削除し、カラム名の行になったところで削除を終了する
+    # 現行の複数カラム分で条件判定する（今後の変更にも程度対応できるように）
+    cols = ["伝票番号", "診療日", "本当の診察日", "該当期間", "開始", "終了", "支払", "馬名"]
 
-    # 日付・馬ID・診断のカラムをだけに絞り込む
-    # medical_report_df = medical_report_df[[db_cols.date, db_cols.horse_id, db_cols.diagnosis]]
+    for i in range(min(len(medical_report_df), 10 ** 2)):
+        part_of_row = medical_report_df.iloc[i][2: 2 + len(cols)]
 
-    horse_df = df_dict[db_cols.horse_db]
+        same_check_value = sum([cols[i] == part_of_row.iloc[i] for i in range(len(cols))])
+        if same_check_value > 2:
+            medical_report_df = medical_report_df.drop(list(range(i)))
+            break
+    else:
+        print("カラム名が見つかりませんでした")
+        return None
+    # 先頭行をカラム名にする
+    medical_report_df.columns = medical_report_df.iloc[0]
 
-    # カルテと馬DBを結合
-    medical_report_df = medical_report_df.merge(horse_df, on=db_cols.horse_id,)
+    # A列のカラム名を変更
+    medical_report_df.columns = [db_cols.use] + list(medical_report_df.columns[1:])
 
-    # 厩舎DBを結合
-    medical_report_df = medical_report_df.merge(df_dict[db_cols.stable_db], on=db_cols.horse_stable_id)
-
-    # 馬主DBを結合
-    medical_report_df = medical_report_df.merge(df_dict[db_cols.owner_db], on=db_cols.horse_owner_id)
+    # useカラムに値があるrecordのみを抽出
+    medical_report_df = medical_report_df[medical_report_df[db_cols.use].notnull()]
 
     # 日付・馬名・性別・毛色・生年月日・馬主名・厩舎名・診断のカラムをだけに絞り込む
-    print(medical_report_df.columns)
     medical_report_df = medical_report_df[
         [db_cols.date, db_cols.horse_name, db_cols.horse_gender, 
-         db_cols.horse_color, db_cols.horse_birth_date, db_cols.owner_name, 
+         db_cols.horse_color, db_cols.horse_age, db_cols.owner_name, 
          db_cols.stable_name, db_cols.diagnosis]]
     
-    # 日付をdatetime型に変換
-    medical_report_df[db_cols.date] = medical_report_df[db_cols.date].apply(excel_date_to_python)
+    # # 日付をdatetime型に変換
+    # medical_report_df[db_cols.date] = medical_report_df[db_cols.date].apply(excel_date_to_python)
     
     return medical_report_df
 # Example usage
 if __name__ == "__main__":
     # Replace 'example.xlsx' with the path to your Excel file
-    excel_file_path = 'example.xlsx'
-    tables = read_excel_to_table(excel_file_path)
+    excel_file_path = 'R6アテナ診療請求書【1回】0425.xlsm'
+    tables = read_excel_to_table(excel_file_path, "カルテ")
     
     if len(tables) > 0:
         print(f"Successfully read {len(tables)} table(s) from the Excel file:")
         for table in tables.values():
-            print(table.attrs['sheet_name'])
-            print(table)
+            # print(table.attrs['sheet_name'])
+            # print(table)
+            pass
     else:
         print("No tables were read from the Excel file.")
 
