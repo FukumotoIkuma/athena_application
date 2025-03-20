@@ -63,20 +63,29 @@
             color: rgb(0, 0, 0);
         }
     </style>
+    <script>
+        function showProcessingMessage() {
+            const messageElement = document.querySelector('.message');
+            if (messageElement) {
+                messageElement.textContent = "処理中です。お待ちください...";
+                messageElement.style.color = "orange";
+            }
+        }
+    </script>
 </head>
 <body>
-    <header>
-        <h1>カルテのExcelを選択してください</h1>
-    </header>
+   
     <main>
-        <form action="/upload" method="post" enctype="multipart/form-data">
+        <form action="/upload" method="post" enctype="multipart/form-data" onsubmit="showProcessingMessage()">
             <label for="file">ファイルを選択してください:</label>
             <input type="file" name="file" id="file">
             <button type="submit">変換</button>
             <!-- メッセージをアップロードフィールドの下に表示 -->
-            {% if message %}
-                <p class="message">{{ message }}</p>
-            {% endif %}
+            <p class="message">
+                {% if message %}
+                    {{ message }}
+                {% endif %}
+            </p>
         </form>
         <div id="status"></div>
     </main>
