@@ -4,7 +4,7 @@ from PyPDF2 import PdfReader, PdfWriter
 from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.cidfonts import UnicodeCIDFont
-from reportlab.lib.pagesizes import A4
+from reportlab.lib.pagesizes import B6
 from io import BytesIO
 
 # 診療申込書.pdfを読み込み、書き込む
@@ -20,7 +20,7 @@ def add_text_to_pdf(input_pdf_path, output_pdf_path, text, x, y):
     for page in reader.pages:
         # 新しいPDFページにテキストを描画
         packet = BytesIO()
-        can = canvas.Canvas(packet, pagesize=A4)
+        can = canvas.Canvas(packet, pagesize=B6)
         can.setFont(font_name, 12)
         can.drawString(x, y, text)
         can.save()
@@ -38,6 +38,8 @@ def add_text_to_pdf(input_pdf_path, output_pdf_path, text, x, y):
         writer.write(output_file)
 
 # 使用例
-input_pdf = "data/診療申込書.pdf"
-output_pdf = "output/診療申込書_更新版.pdf"
-add_text_to_pdf(input_pdf, output_pdf, "追加するテキスト", 100, 750)
+if __name__ == "__main__":
+        
+    input_pdf = "data/診療申込書.pdf"
+    output_pdf = "output/診療申込書_更新版.pdf"
+    add_text_to_pdf(input_pdf, output_pdf, "追加するテキスト", 10, 10)
