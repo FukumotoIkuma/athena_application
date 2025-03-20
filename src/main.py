@@ -17,7 +17,7 @@ def main():
     excel_file_path = 'R6アテナ診療請求書【1回】0425.xlsm'
     df_dict = read_excel_to_table(excel_file_path)
     medical_report_df = create_medical_report_df(df_dict)
-    print(medical_report_df)
+    # print(medical_report_df)
 
     writer = PdfWriter()
 

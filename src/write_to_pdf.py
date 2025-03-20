@@ -17,6 +17,8 @@ def add_texts_to_pdf(font_name, reader:PdfReader, texts_with_positions):
         can = canvas.Canvas(packet, pagesize=B6)
         can.setFont(font_name, 12)
         for text, (x, y) in texts_with_positions:
+            if text == None:
+                text = ""
             can.drawString(x, y, str(text))
         can.save()
 
