@@ -3,9 +3,9 @@ from write_to_pdf import write_application_pdf
 import db_columns as db_cols
 from datetime import datetime
 from PyPDF2 import PdfReader, PdfWriter
-def main():
+import os
+def main(excel_file_path):
     # Replace 'example.xlsx' with the path to your Excel file
-    excel_file_path = 'R6アテナ診療請求書【1回】0425.xlsm'
     df_dict = read_excel_to_table(excel_file_path)
     medical_report_df = create_medical_report_df(df_dict)
     # print(medical_report_df)
@@ -34,8 +34,10 @@ def main():
     # 出力は実行した時間をファイルに含める
     # TODO 開発中はファイル上書きのため、ファイル名を固定にしている
     now = datetime.now().strftime("%Y%m%d%H%M%S")
-    # output_pdf = f"output/診療申込書_{now}.pdf"
-    output_pdf = f"output/診療申込書_更新版.pdf"
+    # ダウンロードフォルダに保存する
+    download_folder = os.path.expanduser('~/Downloads')
+
+    output_pdf = os.path.join(download_folder, f"診療申込書_{now}.pdf")
 
 
     # 新しいPDFを保存
