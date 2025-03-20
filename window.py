@@ -14,11 +14,14 @@ def index():
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
-    if 'file' not in request.files:
-        return render_template('index.html', message="ファイルが選択されていません")
-    file = request.files['file']
-    if file.filename == '':
-        return render_template('index.html', message="ファイルが選択されていません")
+    try:
+        assert 'file' in request.files, "ファイルが選択されていません"
+        file = request.files['file']
+        assert file.filename != '', "ファイルが選択されていません"
+        assert file.filename.endswith(('.xlsx', '.xlsm')), "ファイル形式が間違っています"
+    except AssertionError as e:
+        return render_template('index.html', message=e)
+    
     if file:
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         file.save(file_path)
