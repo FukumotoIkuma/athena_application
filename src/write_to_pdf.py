@@ -60,7 +60,7 @@ def write_application_pdf(date, horse_name, horse_gender, horse_color, horse_age
 
     # pdfの指定座標に楕円を描画
     gender_x = 0
-    if horse_gender  == "オス":
+    if horse_gender  == "牡":
         gender_x = 134
     elif horse_gender == "セン":
         gender_x = 191
