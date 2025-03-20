@@ -22,8 +22,10 @@ def upload_file():
     if file:
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         file.save(file_path)
-
-        main.main(file_path)
+        try:
+            main.main(file_path)
+        except Exception as e:
+            return render_template('index.html', message=f"不明なエラー: {e}")
 
         return render_template('index.html', message=f"変換完了. ダウンロードフォルダを確認してください")
 if __name__ == '__main__':
