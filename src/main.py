@@ -3,15 +3,6 @@ from write_to_pdf import write_application_pdf
 import db_columns as db_cols
 from datetime import datetime
 from PyPDF2 import PdfReader, PdfWriter
-# yyyy-mm-dd形式の日付から年齢を計算する関数
-def calculate_age(date):
-    """
-    Calculate age from date in yyyy-mm-dd format
-    """
-    year, month, day = str(date).split("-")
-    now_year = datetime.now().year
-    return now_year - int(year)
-
 def main():
     # Replace 'example.xlsx' with the path to your Excel file
     excel_file_path = 'R6アテナ診療請求書【1回】0425.xlsm'
