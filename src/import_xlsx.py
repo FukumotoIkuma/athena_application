@@ -2,12 +2,6 @@ import pandas as pd
 import db_columns as db_cols
 from datetime import datetime, timedelta
 
-# Excelの日付シリアルをPythonの日付に変換する関数
-def excel_date_to_python(excel_date):
-    # Excelの日付は1900年1月1日を基準にしています
-    excel_start_date = datetime(1900, 1, 1)
-    delta = timedelta(days=excel_date - 2)  # Excelの誤差修正
-    return excel_start_date + delta
 
 def read_excel_to_table(file_path, *sheet_name_args):
     """
@@ -76,8 +70,12 @@ def create_medical_report_df(df_dict):
          db_cols.horse_color, db_cols.horse_age, db_cols.owner_name, 
          db_cols.stable_name, db_cols.diagnosis]]
     
-    # # 日付をdatetime型に変換
-    # medical_report_df[db_cols.date] = medical_report_df[db_cols.date].apply(excel_date_to_python)
+    # dateカラムのタイプを確認
+    print(medical_report_df[db_cols.date].dtype)
+
+
+    # 日付をdatetime型に変換
+    medical_report_df[db_cols.date] = pd.to_datetime(medical_report_df[db_cols.date], errors='coerce')
     
     return medical_report_df
 # Example usage
