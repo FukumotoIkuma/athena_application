@@ -9,7 +9,7 @@ from io import BytesIO
 from datetime import datetime
 
 # 診療申込書.pdfを読み込み、複数箇所にテキストを書き込む
-def add_texts_to_pdf(font_name, reader:PdfReader, writer:PdfWriter, texts_with_positions):
+def add_texts_to_pdf(font_name, reader:PdfReader, texts_with_positions):
   
     for page in reader.pages:
         # 新しいPDFページに複数のテキストを描画
@@ -37,7 +37,7 @@ def write_application_pdf(date, horse_name, horse_gender, horse_color, horse_age
     # 元のPDFを読み込む
     input_pdf = "data/診療申込書.pdf"
     reader = PdfReader(input_pdf)
-    writer = PdfWriter()
+   
 
     # dateを整形
     # TODO ここでは雑な処理をしている
@@ -55,7 +55,7 @@ def write_application_pdf(date, horse_name, horse_gender, horse_color, horse_age
         (stable_name, (230, 328)),
         (diagnosis, (40, 119)),
     ]
-    add_texts_to_pdf(font_name, reader, writer, texts_with_positions)
+    add_texts_to_pdf(font_name, reader, texts_with_positions)
 
 
     # pdfの指定座標に楕円を描画
@@ -81,21 +81,8 @@ def write_application_pdf(date, horse_name, horse_gender, horse_color, horse_age
     packet.seek(0)
     new_pdf = PdfReader(packet)
     page.merge_page(new_pdf.pages[0])
-    writer.add_page(page)
-
-
-
-
-    # 出力は実行した時間をファイルに含める
-    # TODO 開発中はファイル上書きのため、ファイル名を固定にしている
-    now = datetime.now().strftime("%Y%m%d%H%M%S")
-    # output_pdf = f"output/診療申込書_{now}.pdf"
-    output_pdf = f"output/診療申込書_更新版.pdf"
-
-
-    # 新しいPDFを保存
-    with open(output_pdf, "wb") as output_file:
-        writer.write(output_file)
+    
+    return page
 
 # 使用例
 if __name__ == "__main__":
@@ -107,5 +94,20 @@ if __name__ == "__main__":
     owner_name = "山田太郎"
     stable_name = "久田"
     diagnosis = "腹痛"
-    write_application_pdf(date, horse_name, horse_gender, horse_color, horse_age, owner_name, stable_name, diagnosis)
+
+    page = write_application_pdf(date, horse_name, horse_gender, horse_color, horse_age, owner_name, stable_name, diagnosis)
+    
+    writer = PdfWriter()
+    writer.add_page(page)
+
+    # 出力は実行した時間をファイルに含める
+    # TODO 開発中はファイル上書きのため、ファイル名を固定にしている
+    now = datetime.now().strftime("%Y%m%d%H%M%S")
+    # output_pdf = f"output/診療申込書_{now}.pdf"
+    output_pdf = f"output/診療申込書_更新版.pdf"
+
+
+    # 新しいPDFを保存
+    with open(output_pdf, "wb") as output_file:
+        writer.write(output_file)
     print("診療申込書を作成しました。")
