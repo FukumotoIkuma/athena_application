@@ -5,3 +5,4 @@ src/__pycache__/
 R6アテナ診療請求書【1回】0425.xlsm
 build/
 dist/
+__pycache__/
