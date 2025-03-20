@@ -3,3 +3,5 @@ src/__pycache__/
 ~$example.xlsx
 ~$R6アテナ診療請求書【1回】0425.xlsm
 R6アテナ診療請求書【1回】0425.xlsm
+build/
+dist/

@@ -1,6 +1,8 @@
-from src.import_xlsx import read_excel_to_table, create_medical_report_df
-from src.write_to_pdf import write_application_pdf
-import src.db_columns as db_cols
+
+from import_xlsx import read_excel_to_table, create_medical_report_df
+from write_to_pdf import write_application_pdf
+import db_columns as db_cols
+
 
 from datetime import datetime
 from pypdf import PdfReader, PdfWriter
@@ -49,4 +51,4 @@ def main(excel_file_path):
         writer.write(output_file)
 
 if __name__ == "__main__":
-    main()
+    main("R6アテナ診療請求書【1回】0425.xlsm")

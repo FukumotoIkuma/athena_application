@@ -1,7 +1,5 @@
 import pandas as pd
-import src.db_columns as db_cols
-from datetime import datetime, timedelta
-
+import db_columns as db_cols
 
 def read_excel_to_table(file_path, *sheet_name_args):
     """

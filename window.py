@@ -1,3 +1,6 @@
+# pyinstallerのおまじない
+import pypdf
+
 import os
 import webview
 from flask import Flask, render_template, request
