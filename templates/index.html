@@ -3,17 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ファイルアップロード</title>
+    <title>カルテのExcelをアップロード</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f9f9f9;
             margin: 0;
             padding: 0;
+        }
+        header {
+            background-color: #76a1cf;
+            color: #fff;
+            padding: 10px 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        main {
+            margin-top: 60px; /* ヘッダーの高さ分だけ余白を追加 */
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: calc(100vh - 60px); /* ヘッダーを除いた高さ */
         }
         h1 {
             color: #333;
@@ -44,14 +58,27 @@
         button:hover {
             background-color: #0056b3;
         }
+        .message {
+            margin-top: 10px;
+            color: rgb(0, 0, 0);
+        }
     </style>
 </head>
 <body>
-    <h1>ファイルアップロード</h1>
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <label for="file">ファイルを選択してください:</label>
-        <input type="file" name="file" id="file">
-        <button type="submit">アップロード</button>
-    </form>
+    <header>
+        <h1>カルテのExcelを選択してください</h1>
+    </header>
+    <main>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <label for="file">ファイルを選択してください:</label>
+            <input type="file" name="file" id="file">
+            <button type="submit">変換</button>
+            <!-- メッセージをアップロードフィールドの下に表示 -->
+            {% if message %}
+                <p class="message">{{ message }}</p>
+            {% endif %}
+        </form>
+        <div id="status"></div>
+    </main>
 </body>
 </html>

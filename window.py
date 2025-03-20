@@ -1,6 +1,7 @@
 import os
 import webview
 from flask import Flask, render_template, request
+import shutil
 
 app = Flask(__name__, static_folder='static')
 UPLOAD_FOLDER = 'uploads'
@@ -14,10 +15,10 @@ def index():
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
-        return "ファイルが選択されていません", 400
+        return render_template('index.html', message="ファイルが選択されていません")
     file = request.files['file']
     if file.filename == '':
-        return "ファイル名が空です", 400
+        return render_template('index.html', message="ファイルが選択されていません")
     if file:
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         file.save(file_path)
@@ -31,5 +32,9 @@ if __name__ == '__main__':
     thread.start()
 
     # Webviewウィンドウを起動
-    webview.create_window("ファイルアップロードアプリ", "http://localhost:65339")
+    webview.create_window("診療申込書作成アプリ", "http://localhost:65339")
     webview.start()
+
+    # uploadフォルダ内のファイルを削除
+    
+    shutil.rmtree(UPLOAD_FOLDER)
