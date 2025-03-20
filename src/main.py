@@ -37,7 +37,7 @@ def main(excel_file_path):
 
     # 出力は実行した時間をファイルに含める
     # TODO 開発中はファイル上書きのため、ファイル名を固定にしている
-    now = datetime.now().strftime("%Y%m%d%H%M%S")
+    now = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
     # ダウンロードフォルダに保存する
     download_folder = os.path.expanduser('~/Downloads')
 
