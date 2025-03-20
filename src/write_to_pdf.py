@@ -7,8 +7,8 @@ from reportlab.pdfbase.cidfonts import UnicodeCIDFont
 from reportlab.lib.pagesizes import B6
 from io import BytesIO
 
-# 診療申込書.pdfを読み込み、書き込む
-def add_text_to_pdf(input_pdf_path, output_pdf_path, text, x, y):
+# 診療申込書.pdfを読み込み、複数箇所にテキストを書き込む
+def add_texts_to_pdf(input_pdf_path, output_pdf_path, texts_with_positions):
     # 日本語フォントを登録
     font_name = 'HeiseiKakuGo-W5'
     pdfmetrics.registerFont(UnicodeCIDFont(font_name))
@@ -18,11 +18,12 @@ def add_text_to_pdf(input_pdf_path, output_pdf_path, text, x, y):
     writer = PdfWriter()
 
     for page in reader.pages:
-        # 新しいPDFページにテキストを描画
+        # 新しいPDFページに複数のテキストを描画
         packet = BytesIO()
         can = canvas.Canvas(packet, pagesize=B6)
         can.setFont(font_name, 12)
-        can.drawString(x, y, text)
+        for text, (x, y) in texts_with_positions:
+            can.drawString(x, y, text)
         can.save()
 
         # テキストを描画したPDFを読み込み
@@ -39,7 +40,11 @@ def add_text_to_pdf(input_pdf_path, output_pdf_path, text, x, y):
 
 # 使用例
 if __name__ == "__main__":
-        
     input_pdf = "data/診療申込書.pdf"
     output_pdf = "output/診療申込書_更新版.pdf"
-    add_text_to_pdf(input_pdf, output_pdf, "追加するテキスト", 10, 10)
+    texts_with_positions = [
+        ("テキスト1", (10, 10)),
+        ("テキスト2", (50, 50)),
+        ("テキスト3", (100, 100)),
+    ]
+    add_texts_to_pdf(input_pdf, output_pdf, texts_with_positions)
