@@ -70,10 +70,6 @@ def create_medical_report_df(df_dict):
          db_cols.horse_color, db_cols.horse_age, db_cols.owner_name, 
          db_cols.stable_name, db_cols.diagnosis]]
     
-    # dateカラムのタイプを確認
-    print(medical_report_df[db_cols.date].dtype)
-
-
     # 日付をdatetime型に変換
     medical_report_df[db_cols.date] = pd.to_datetime(medical_report_df[db_cols.date], errors='coerce')
     

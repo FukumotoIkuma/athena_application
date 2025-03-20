@@ -7,6 +7,7 @@ from reportlab.pdfbase.cidfonts import UnicodeCIDFont
 from reportlab.lib.pagesizes import B6
 from io import BytesIO
 from datetime import datetime
+import pandas as pd
 
 # 診療申込書.pdfを読み込み、複数箇所にテキストを書き込む
 def add_texts_to_pdf(font_name, reader:PdfReader, texts_with_positions):
@@ -17,7 +18,7 @@ def add_texts_to_pdf(font_name, reader:PdfReader, texts_with_positions):
         can = canvas.Canvas(packet, pagesize=B6)
         can.setFont(font_name, 12)
         for text, (x, y) in texts_with_positions:
-            if text == None:
+            if pd.isna(text) or pd.isnull(text):
                 text = ""
             can.drawString(x, y, str(text))
         can.save()
