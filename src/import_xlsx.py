@@ -1,5 +1,5 @@
 import pandas as pd
-import db_columns as db_cols
+import src.db_columns as db_cols
 from datetime import datetime, timedelta
 
 

@@ -1,6 +1,7 @@
-from import_xlsx import read_excel_to_table, create_medical_report_df
-from write_to_pdf import write_application_pdf
-import db_columns as db_cols
+from src.import_xlsx import read_excel_to_table, create_medical_report_df
+from src.write_to_pdf import write_application_pdf
+import src.db_columns as db_cols
+
 from datetime import datetime
 from PyPDF2 import PdfReader, PdfWriter
 import os
