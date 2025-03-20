@@ -39,9 +39,15 @@ def write_application_pdf(date, horse_name, horse_gender, horse_color, horse_age
     reader = PdfReader(input_pdf)
     writer = PdfWriter()
 
+    # dateを整形
+    # TODO ここでは雑な処理をしている
+    year, month, day = date.split("-")
+    date_y = 397
     # テキストを入力
     texts_with_positions = [
-        (date, (170, 395)),
+        (year, (170, date_y)),
+        (month, (235, date_y)),
+        (day, (285, date_y)),
         (horse_name, (90, 265)),
         (horse_color, (270, 240)),
         (horse_age, (130, 240)),
