@@ -14,7 +14,7 @@ def calculate_age(date):
 
 def main():
     # Replace 'example.xlsx' with the path to your Excel file
-    excel_file_path = 'example.xlsx'
+    excel_file_path = 'R6アテナ診療請求書【1回】0425.xlsm'
     df_dict = read_excel_to_table(excel_file_path)
     medical_report_df = create_medical_report_df(df_dict)
     print(medical_report_df)
@@ -26,7 +26,7 @@ def main():
         horse_name = row[db_cols.horse_name]
         horse_gender = row[db_cols.horse_gender]
         horse_color = row[db_cols.horse_color]
-        horse_age = calculate_age(row[db_cols.horse_birth_date])
+        horse_age = row[db_cols.horse_age]
         owner_name = row[db_cols.owner_name]
         stable_name = row[db_cols.stable_name]
         diagnosis = row[db_cols.diagnosis]
