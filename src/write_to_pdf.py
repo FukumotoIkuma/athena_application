@@ -51,7 +51,7 @@ def write_application_pdf(date, horse_name, horse_gender, horse_color, horse_age
         (horse_name, (90, 265)),
         (horse_color, (270, 240)),
         (horse_age, (130, 240)),
-        (owner_name, (100, 193)),
+        (owner_name, (90, 193)),
         (stable_name, (230, 328)),
         (diagnosis, (40, 119)),
     ]
