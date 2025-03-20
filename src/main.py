@@ -3,7 +3,7 @@ from src.write_to_pdf import write_application_pdf
 import src.db_columns as db_cols
 
 from datetime import datetime
-from PyPDF2 import PdfReader, PdfWriter
+from pypdf import PdfReader, PdfWriter
 import os
 def main(excel_file_path):
     # Replace 'example.xlsx' with the path to your Excel file
