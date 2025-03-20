@@ -53,8 +53,7 @@ def create_medical_report_df(df_dict):
             medical_report_df = medical_report_df.drop(list(range(i)))
             break
     else:
-        print("カラム名が見つかりませんでした")
-        return None
+        raise Exception("カルテシートに予想外の変更が加えられています")
     # 先頭行をカラム名にする
     medical_report_df.columns = medical_report_df.iloc[0]
 

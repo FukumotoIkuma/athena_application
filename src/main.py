@@ -7,7 +7,10 @@ from PyPDF2 import PdfReader, PdfWriter
 import os
 def main(excel_file_path):
     # Replace 'example.xlsx' with the path to your Excel file
-    df_dict = read_excel_to_table(excel_file_path)
+    try:
+        df_dict = read_excel_to_table(excel_file_path)
+    except Exception as e:
+        raise Exception(f"ファイルに予定外の変更が加えられています")
     medical_report_df = create_medical_report_df(df_dict)
     # print(medical_report_df)
 
