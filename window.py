@@ -4,14 +4,14 @@ import reportlab
 import pandas
 
 
-from flask import Flask, request, render_template_string
+from flask import Flask, request, render_template
 import os
 import shutil
 import webview
 import threading
 
 import main
-from html_template import HTML_TEMPLATE
+import write_to_pdf
 
 app = Flask(__name__)
 
@@ -20,10 +20,14 @@ import sys
 
 if getattr(sys, 'frozen', False):
     # PyInstaller の場合（--onefile で一時フォルダに展開される）
+    # templatesなどの追加フォルダは、オプションで指定しないと含まれない
+    #  .spec: datas=[('templates', 'templates'),('data','data')],
     BASE_DIR = sys._MEIPASS
+    write_to_pdf.set_base_dir(BASE_DIR)
 else:
     # 通常の Python 実行時
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+app = Flask(__name__, template_folder=os.path.join(BASE_DIR, 'templates'))
 
 print("Application directory:", BASE_DIR)
 
@@ -34,10 +38,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/')
 def index():
-    # dir構造を把握するため一時的にここで表示する
-    # base_dirで何が表示されるか確認する
-    dir = os.listdir(BASE_DIR)
-    return render_template_string(HTML_TEMPLATE, message= f"{dir}")
+    return render_template("index.html")
    
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -47,7 +48,7 @@ def upload_file():
         assert file.filename != '', "ファイルが選択されていません"
         assert file.filename.endswith(('.xlsx', '.xlsm')), "ファイル形式が間違っています"
     except AssertionError as e:
-        return render_template_string(HTML_TEMPLATE, message= f"{e}")
+        return render_template("index.html", message= f"{e}")
     
     if file:
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
@@ -55,9 +56,9 @@ def upload_file():
         try:
             main.main(file_path)
         except Exception as e:
-            return render_template_string(HTML_TEMPLATE, message= f"不明なエラー: {e}")
+            return render_template("index.html", message= f"不明なエラー: {e}")
 
-        return render_template_string(HTML_TEMPLATE, message="変換完了. ダウンロードフォルダを確認してください")
+        return render_template("index.html", message="変換完了. ダウンロードフォルダを確認してください")
     
 
 if __name__ == '__main__':
