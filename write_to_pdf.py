@@ -8,6 +8,11 @@ from reportlab.lib.pagesizes import B6
 from io import BytesIO
 from datetime import datetime
 import pandas as pd
+import os
+
+def set_base_dir(dir):
+    global BASE_DIR
+    BASE_DIR = dir
 
 # 診療申込書.pdfを読み込み、複数箇所にテキストを書き込む
 def add_texts_to_pdf(font_name, reader:PdfReader, texts_with_positions):
@@ -38,7 +43,7 @@ def write_application_pdf(date, horse_name, horse_gender, horse_color, horse_age
     pdfmetrics.registerFont(UnicodeCIDFont(font_name))
 
     # 元のPDFを読み込む
-    input_pdf = "data/診療申込書.pdf"
+    input_pdf = os.path.join(BASE_DIR, "data/診療申込書.pdf")
     reader = PdfReader(input_pdf)
    
 
