@@ -7,7 +7,7 @@ import db_columns as db_cols
 from datetime import datetime
 from pypdf import PdfReader, PdfWriter
 import os
-def main(excel_file_path):
+def main(excel_file_path, base_dir):
     # Replace 'example.xlsx' with the path to your Excel file
     try:
         df_dict = read_excel_to_table(excel_file_path)
@@ -34,7 +34,8 @@ def main(excel_file_path):
                              horse_age,
                              owner_name,
                              stable_name,
-                             diagnosis)
+                             diagnosis,
+                             base_dir)
         writer.add_page(page)
 
     # 出力は実行した時間をファイルに含める

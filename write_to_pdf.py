@@ -10,9 +10,6 @@ from datetime import datetime
 import pandas as pd
 import os
 
-def set_base_dir(dir):
-    global BASE_DIR
-    BASE_DIR = dir
 
 # 診療申込書.pdfを読み込み、複数箇所にテキストを書き込む
 def add_texts_to_pdf(font_name, reader:PdfReader, texts_with_positions):
@@ -36,7 +33,7 @@ def add_texts_to_pdf(font_name, reader:PdfReader, texts_with_positions):
         page.merge_page(new_pdf.pages[0])
 
 
-def write_application_pdf(date, horse_name, horse_gender, horse_color, horse_age, owner_name, stable_name, diagnosis):
+def write_application_pdf(date, horse_name, horse_gender, horse_color, horse_age, owner_name, stable_name, diagnosis, BASE_DIR):
 
     # 日本語フォントを登録
     font_name = 'HeiseiKakuGo-W5'

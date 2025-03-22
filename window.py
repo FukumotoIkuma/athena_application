@@ -23,7 +23,6 @@ if getattr(sys, 'frozen', False):
     # templatesなどの追加フォルダは、オプションで指定しないと含まれない
     #  .spec: datas=[('templates', 'templates'),('data','data')],
     BASE_DIR = sys._MEIPASS
-    write_to_pdf.set_base_dir(BASE_DIR)
 else:
     # 通常の Python 実行時
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -54,7 +53,7 @@ def upload_file():
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         file.save(file_path)
         try:
-            main.main(file_path)
+            main.main(file_path,BASE_DIR)
         except Exception as e:
             return render_template("index.html", message= f"不明なエラー: {e}")
 
