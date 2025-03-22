@@ -2,13 +2,16 @@
 
 ## スクリプトのダウンロード
 
-ブラウザで以下のURLにアクセスし、zipファイルをダウンロード
-https://github.com/FukumotoIkuma/athena_application/archive/refs/heads/main.zip
+[こちら(リポジトリのダウンロードzip)](https://github.com/FukumotoIkuma/athena_application/archive/refs/heads/main.zip)のリンクをクリックし、zipファイルをダウンロードする。
+
+`athena_application-main.zip`がダウンロードされる。
 
 ## スクリプトの解答
 
 `V:\Users\user\`直下にファイルを解凍する
 （この場所でないとショートカットが機能しません）
+展開後、以下の構成になれば良い
+`V:\Users\user\athena_application-main\{様々なファイル}`
 
 ## pythonのインストール
 
