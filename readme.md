@@ -1,7 +1,7 @@
 # How to use
 
 ## スクリプトのダウンロード
-ブラウザで以下のURLにアクセスし、任意のフォルダに解凍する
+ブラウザで以下のURLにアクセスし、エクセルファイルのあるフォルダに解凍する
 https://github.com/FukumotoIkuma/athena_application/archive/refs/heads/main.zip
 
 
@@ -21,7 +21,10 @@ python3 window.py
 # pyinstallerを用いたexeファイル
 
 はじめに、pyinstallerをビルドし直す必要がある
-venv等の場合もほぼ同様
+
+gitをインストールしておく必要がある。
+
+venv等の環境の場合もほぼ同様
 
 ```bash
 git clone https://github.com/pyinstaller/pyinstaller.git
