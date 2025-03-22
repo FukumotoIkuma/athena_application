@@ -1,21 +1,33 @@
 # How to use
 
 ## スクリプトのダウンロード
-ブラウザで以下のURLにアクセスし、エクセルファイルのあるフォルダに解凍する
+
+ブラウザで以下のURLにアクセスし、zipファイルをダウンロード
 https://github.com/FukumotoIkuma/athena_application/archive/refs/heads/main.zip
 
+## スクリプトの解答
+
+`V:\Users\user\`直下にファイルを解凍する
+（この場所でないとショートカットが機能しません）
 
 ## pythonのインストール
-「python install」などで導入。
+
+「python install」などで検索し導入。
 python3.9を導入すること。
 
 ## 必要なモジュールのインストール
+
 展開したフォルダに移動し以下を実行
 pip install -r requirements.txt
 
 ## ファイルの実行
-python3 window.py
 
+python3 window.py
+もしここで不要なモジュールがあった場合適宜pipを用いてインストール
+
+## ショートカットを利用した起動
+
+`MTFapp.vbs`を実行することでアプリケーションが起動する。このファイルのショートカットをデスクトップなどに追加すると良い。
 
 
 # pyinstallerを用いたexeファイル
