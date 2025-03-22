@@ -60,6 +60,14 @@ def create_medical_report_df(df_dict):
 
     # useカラムに値があるrecordのみを抽出
     medical_report_df = medical_report_df[medical_report_df[db_cols.use].notnull()]
+    print(medical_report_df)
+
+    # useカラムの値を数字に変換できないものは削除
+    medical_report_df = medical_report_df[
+        medical_report_df[db_cols.use].apply(lambda x: str(x).isnumeric() if pd.notnull(x) else False)
+    ]
+
+    print(medical_report_df)
 
     # 日付・馬名・性別・毛色・生年月日・馬主名・厩舎名・診断のカラムをだけに絞り込む
     medical_report_df = medical_report_df[
