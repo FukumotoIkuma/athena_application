@@ -1,12 +1,21 @@
 # How to use
 
-# pythonのインストール
+## スクリプトのダウンロード
+ブラウザで以下のURLにアクセスし、任意のフォルダに解凍する
+https://github.com/FukumotoIkuma/athena_application/archive/refs/heads/main.zip
+
+
+## pythonのインストール
 「python install」などで導入。
 python3.9を導入すること。
 
-start.shに実行権限を与える
+## 必要なモジュールのインストール
+展開したフォルダに移動し以下を実行
+pip install -r requirements.txt
 
-start.shを実行する
+## ファイルの実行
+python3 window.py
+
 
 
 # pyinstallerを用いたexeファイル
